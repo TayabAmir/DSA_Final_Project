@@ -1,0 +1,22 @@
+#grid-container {
+    overflow-x: auto;
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0;
+    white-space: nowrap;
+}
+
+td {
+    min-width: 70px;
+    height: 30px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+td:first-child, tr:first-child td {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
