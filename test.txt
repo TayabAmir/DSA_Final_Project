@@ -1,0 +1,21 @@
+function performOperation(operation) {
+    // Get all selected cells
+    const selectedCells = document.querySelectorAll('.highlight');
+
+    // Initialize result variable
+    let result = operation === 'sum' ? 0 : 1;
+
+    selectedCells.forEach(cell => {
+        const cellValue = parseFloat(cell.innerText);
+        if (!isNaN(cellValue)) {
+            if (operation === 'sum') {
+                result += cellValue;
+            } else if (operation === 'multiply') {
+                result *= cellValue;
+            }
+        }
+    });
+
+    // Display result
+    alert(`Result of ${operation}: ${result}`);
+}

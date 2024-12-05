@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel-Like Spreadsheet</title>
+    <link rel="stylesheet" href="spreadsheetCSS.css">
+</head>
+<body>
+    <div id="ribbon">
+        <div class="tabs">
+            <button class="tab-button active" data-tab="home">Home</button>
+            <button class="tab-button" data-tab="insert">Insert</button>
+            <button class="tab-button" data-tab="view">View</button>
+        </div>
+        <div class="tab-content">
+            <div class="tab-panel active" id="home">
+                <div class="group">
+                    <button id="bold">Bold</button>
+                    <button id="italic">Italic</button>
+                    <button id="underline">Underline</button>
+                </div>
+                <div class="group">
+                    <button id="clearData">Clear Data</button>
+                </div>
+            </div>
+            <div class="tab-panel" id="insert">
+                <div class="group">
+                    <button id="insertChart">Insert Chart</button>
+                    <button id="insertTable">Insert Table</button>
+                </div>
+            </div>
+            <div class="tab-panel" id="view">
+                <div class="group">
+                    <button id="toggleGrid">Toggle Gridlines</button>
+                    <button id="toggleTheme">Toggle Theme</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="grid-container"></div>
+    <script src="LinkedLists.js"></script>
+    <script src="DisplayGrid.js"></script>
+    <script src="Toolbar.js"></script>
+</body>
+</html>
