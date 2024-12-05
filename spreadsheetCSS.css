@@ -1,9 +1,21 @@
+<<<<<<< HEAD
 /* Table Styling */
 table {
     border-collapse: collapse;
     margin: 20px;
     background-color: #f9f9f9; 
     font-family: Arial, sans-serif; 
+=======
+#grid-container {
+    overflow-x: auto;
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0;
+    white-space: nowrap;
+>>>>>>> 15ecbf1d2536ddf01dde9204fe5900b4d52c7973
 }
 
 td {
@@ -11,6 +23,7 @@ td {
     height: 30px;
     text-align: center;
     border: 1px solid black;
+<<<<<<< HEAD
     cursor: pointer; 
 }
 
@@ -98,3 +111,11 @@ tr:first-child td {
     background-color: #0056b3;
 }
 
+=======
+}
+
+td:first-child, tr:first-child td {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+>>>>>>> 15ecbf1d2536ddf01dde9204fe5900b4d52c7973
