@@ -2,6 +2,7 @@ class Node {
     constructor(data) {
         this.data = data
         this.value = ""
+        this.formula = "";
         this.left = null
         this.right = null
         this.up = null
