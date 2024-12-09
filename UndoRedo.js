@@ -1,5 +1,7 @@
 let undo = new Stack();
 let redo = new Stack();
+let numberBST = new BST();
+let stringBST = new BST();
 
 function saveState(cell, textForUndo = cell.node.value) {
     if (cell.node.value.trim() == "") return
@@ -14,7 +16,7 @@ function saveState(cell, textForUndo = cell.node.value) {
     });
 
     redo.array.length = 0;
-    undo.print()
+    // undo.print()
 }
 
 function undoAction() {
@@ -108,6 +110,15 @@ function enableEditing(cell) {
             }
         }
         cell.innerText = cell.node.value;
+
+        if(cell.node.value){
+            if(!isNaN(cell.node.value)){
+                numberBST.insert(cell.node.ref, Number(cell.node.value))
+            } else {
+                stringBST.insert(cell.node.ref, cell.node.value)
+            }
+        }
+
         saveState(cell, textForUndo);
     };
     input.addEventListener('keydown', (event) => {

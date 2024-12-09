@@ -1,4 +1,3 @@
-/* Table Styling */
 table {
     border-collapse: collapse;
     margin: 20px;
@@ -19,7 +18,6 @@ td {
     background-color: #e0f7fa; 
 }
 
-/* Row Header Styling */
 tr td:first-child {
     background-color: #e0e0e0; 
     font-weight: bold;
@@ -30,7 +28,6 @@ tr:first-child td {
     font-weight: bold;
 }
 
-/* Ribbon Toolbar Styles */
 #ribbon {
     background-color: #f1f1f1;
     border-bottom: 2px solid #ccc;
@@ -96,4 +93,8 @@ tr:first-child td {
 
 .group button:hover {
     background-color: #0056b3;
+}
+
+.found {
+    background-color: lightgreen !important;
 }

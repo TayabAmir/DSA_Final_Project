@@ -1,6 +1,6 @@
 class Node {
-    constructor(data) {
-        this.data = data
+    constructor(row, col) {
+        this.ref = [row, col]
         this.value = ""
         this.formula = "";
         this.left = null
@@ -26,7 +26,7 @@ class TernaryLinkedList {
     }
 
     insertNode(i, j) {
-        const node = new Node(`${i}, ${j}`);
+        const node = new Node(i,j);
         if (i === 0 && j === 0) {
             this.head = node;
             this.end = node;

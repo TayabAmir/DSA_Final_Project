@@ -9,7 +9,6 @@ for (let i = 0; i < rows; i++) {
 }
 
 let currentCell = null;
-
 function display(list) {
     let container = document.getElementById('grid-container');
     let table = document.createElement('table');
@@ -21,7 +20,7 @@ function display(list) {
             let cell = document.createElement('td');
             cell.innerText = currCol.value;
             cell.node = currCol;
-            cell.tabIndex = 0; 
+            cell.tabIndex = 0;
             cell.addEventListener('click', function () {
                 highlightCell(cell);
                 if (!cell.querySelector('input')) {
@@ -29,7 +28,7 @@ function display(list) {
                 }
             });
 
-            currCol.domElement = cell; 
+            currCol.domElement = cell;
             row.appendChild(cell);
             currCol = currCol.right;
         }
@@ -97,7 +96,6 @@ document.addEventListener('keydown', function (event) {
     if (!currentCell || !currentCell.node) return;
 
     let nextNode = null;
-
     switch (event.key) {
         case 'ArrowUp':
             nextNode = currentCell.node.up;
@@ -114,7 +112,7 @@ document.addEventListener('keydown', function (event) {
     }
     if (nextNode) {
         highlightCell(nextNode.domElement);
-        event.preventDefault();  
+        event.preventDefault();
     }
 });
 

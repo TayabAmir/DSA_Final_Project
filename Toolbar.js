@@ -19,7 +19,7 @@ document.getElementById('toggleTheme').addEventListener('click', function () {
   toggleTheme();
 });
 
-function clearData() {
+function clearData() {  
   let arr = Array.from(document.querySelectorAll('td'));
   for (let i = 0; i < arr.length; i++) {
     if (i < cols || (i % (cols + 1)) === 0)
