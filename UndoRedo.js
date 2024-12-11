@@ -2,6 +2,7 @@ let undo = new Stack();
 let redo = new Stack();
 let numberBST = new BST();
 let stringBST = new BST();
+let graph = new Graph();    
 
 function saveState(cell, textForUndo = cell.node.value) {
     if (cell.node.value.trim() == "") return
@@ -16,7 +17,6 @@ function saveState(cell, textForUndo = cell.node.value) {
     });
 
     redo.array.length = 0;
-    // undo.print()
 }
 
 function undoAction() {
@@ -103,19 +103,32 @@ function enableEditing(cell) {
     });
     const saveInput = () => {
         cell.node.value = input.value
-        if(!input.value.empty){
-            if(input.value[0] === "="){
+        if (!input.value.empty) {
+            if (input.value[0] === "=") {
+                cellRefsInFormula = []
                 cell.node.formula = input.value
-                cell.node.value = evaluate(cell).toString()
+                cell.node.value = evaluate(cell, cellRefsInFormula).toString()
+
+                if(cell.node.value !== "#NAME?") {
+                    graph.addNode(cell.node.ref, cellRefsInFormula);
+
+                    if(graph.detectCycle()) {
+                        alert("There should be no circular dependency! Please correct the formula");
+                        graph.removeNode(cell.node.ref);
+                        currentCell.querySelector('input').value = "";
+                        return
+                    }
+                }
             }
         }
         cell.innerText = cell.node.value;
 
-        if(cell.node.value){
-            if(!isNaN(cell.node.value)){
+        if (cell.node.value) {
+            if (!isNaN(cell.node.value)) {
                 numberBST.insert(cell.node.ref, Number(cell.node.value))
             } else {
-                stringBST.insert(cell.node.ref, cell.node.value)
+                if (cell.node.value !== "#NAME?")
+                    stringBST.insert(cell.node.ref, cell.node.value)
             }
         }
 
