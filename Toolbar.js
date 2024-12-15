@@ -20,6 +20,7 @@ document.getElementById('bold').addEventListener('click', () => {
     currentCell.style.fontWeight = currentCell.style.fontWeight === 'bold' ? 'normal' : 'bold';
 });
 
+
 document.getElementById('italic').addEventListener('click', () => {
     if (!currentCell) return;
     saveState(currentCell);
@@ -30,6 +31,22 @@ document.getElementById('underline').addEventListener('click', () => {
     if (!currentCell) return;
     saveState(currentCell);
     currentCell.style.textDecoration = currentCell.style.textDecoration === 'underline' ? 'none' : 'underline';
+});
+
+document.addEventListener('keydown', (event) => {
+    if (!currentCell) return;
+    if (event.ctrlKey) {
+        if (event.key.toLowerCase() === 'b') {
+            saveState(currentCell);
+            currentCell.style.fontWeight = currentCell.style.fontWeight === 'bold' ? 'normal' : 'bold';
+        } else if (event.key.toLowerCase() === 'i') {
+            saveState(currentCell);
+            currentCell.style.fontStyle = currentCell.style.fontStyle === 'italic' ? 'normal' : 'italic';
+        } else if (event.key.toLowerCase() === 'q') {
+            saveState(currentCell);
+            currentCell.style.textDecoration = currentCell.style.textDecoration === 'underline' ? 'none' : 'underline';
+        }
+    }
 });
 
 document.getElementById('fontSizeDropdown').addEventListener('change', function () {
@@ -112,28 +129,72 @@ function clearData() {
         row = row.down
     }
 }
-
+let lines = true;
 function toggleGridlines() {
-    console.log('Toggling gridlines...');
+    const table = document.querySelector('table');
+    const isLightTheme = document.body.classList.contains('light-theme');
+    const borderColor = isLightTheme ? 'black' : 'white';
+
+    if (lines) {
+        table.style.border = 'none';
+        table.querySelectorAll('td, th').forEach(cell => {
+            cell.style.border = 'none';
+        });
+        lines = false;
+    } else {
+        table.style.border = `1px solid ${borderColor}`;
+        table.querySelectorAll('td, th').forEach(cell => {
+            cell.style.border = `1px solid ${borderColor}`;
+        });
+        lines = true;
+    }
 }
 
 function toggleTheme() {
-    document.body.classList.toggle('dark-theme');
+    const isLightTheme = document.body.classList.contains('light-theme');
+
+    if (isLightTheme) {
+        document.body.classList.replace('light-theme', 'dark-theme');
+        document.querySelectorAll('td, th').forEach(cell => {
+            cell.style.backgroundColor = '#121212';
+            cell.style.color = 'white';
+            cell.style.border = '1px solid white';
+        });
+    } else {
+        document.body.classList.replace('dark-theme', 'light-theme');
+        document.querySelectorAll('td, th').forEach(cell => {
+            cell.style.backgroundColor = 'white';
+            cell.style.color = 'black';
+            cell.style.border = '1px solid black';
+        });
+    }
 }
 
 document.body.classList.add('light-theme');
 
 const style = document.createElement('style');
 style.innerHTML = `
-        .light-theme {
-            background-color: white;
-            color: black;
-        }
+    .light-theme {
+        background-color: white;
+        color: black;
+        transition: background-color 0.3s, color 0.3s;
+    }
 
-        .dark-theme {
-            background-color: #121212;
-            color: white;
-        }
-    `;
+    .dark-theme {
+        background-color: #121212;
+        color: white;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    td, th {
+        padding: 8px;
+        text-align: center;
+    }
+`;
 document.head.appendChild(style);
-

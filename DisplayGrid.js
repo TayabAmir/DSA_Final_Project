@@ -41,6 +41,7 @@ function display(list) {
     container.appendChild(table);
     addRowHeaders();
     addColumnHeaders();
+    makeColumnsResizable(table);
 }
 
 function addColumnHeaders() {
@@ -60,15 +61,15 @@ function addColumnHeaders() {
         }
         headerCell.style.fontWeight = 'bold';
         headerCell.classList.add('resizable');
-        headerCell.style.position = 'relative';  
-        const resizeHandle = document.createElement('div'); 
+        headerCell.style.position = 'relative';
+        const resizeHandle = document.createElement('div');
         resizeHandle.style.position = 'absolute';
         resizeHandle.style.right = '0';
         resizeHandle.style.top = '0';
         resizeHandle.style.width = '5px';
         resizeHandle.style.height = '100%';
         resizeHandle.style.cursor = 'ew-resize';
-        headerCell.appendChild(resizeHandle);        
+        headerCell.appendChild(resizeHandle);
         headerRow.appendChild(headerCell);
     }
     table.prepend(headerRow);
@@ -125,45 +126,42 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
-function attachResizeListeners() {
-    let isResizing = false;
-    let currentColumn = null;
-    let startX = 0;
-    let startWidth = 0;
-    const headerCells = document.querySelectorAll('td.resizable'); 
-    headerCells.forEach((headerCell, index) => {
-        const resizeHandle = headerCell.querySelector('div');
-        resizeHandle.addEventListener('mousedown', (e) => {
-            isResizing = true;
-            currentColumn = headerCell;
-            startX = e.clientX;
-            startWidth = currentColumn.offsetWidth;
-            document.body.style.userSelect = 'none';  
+function makeColumnsResizable(table) {
+    const cols = table.querySelectorAll('td:first-child, th:first-child');
+    cols.forEach((col, index) => {
+        const resizer = document.createElement('div');
+        resizer.style.position = 'absolute';
+        resizer.style.right = '0';
+        resizer.style.width = '5px';
+        resizer.style.cursor = 'col-resize';
+        resizer.style.userSelect = 'none';
+        resizer.style.height = '100%';
+        resizer.style.background = 'transparent';
+
+        resizer.addEventListener('mousedown', function (e) {
+            e.preventDefault();
+            const startX = e.pageX;
+            const startWidth = col.offsetWidth;
+
+            function onMouseMove(event) {
+                const newWidth = startWidth + (event.pageX - startX);
+                col.style.width = `${newWidth}px`;
+                table.querySelectorAll(`td:nth-child(${index + 1})`).forEach(cell => {
+                    cell.style.width = `${newWidth}px`;
+                });
+            }
+
+            function onMouseUp() {
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
         });
-    });
-    document.addEventListener('mousemove', (e) => {
-        if (isResizing && currentColumn) {
-            const deltaX = e.clientX - startX;
-            currentColumn.style.width = `${startWidth + deltaX}px`;
-            const columnIndex = Array.from(currentColumn.parentElement.children).indexOf(currentColumn);
-            const rows = document.querySelectorAll('table tr');
-            rows.forEach((row) => {
-                const cell = row.children[columnIndex];
-                if (cell) {
-                    cell.style.width = `${startWidth + deltaX}px`;
-                }
-            });
-        }
-    });
-    document.addEventListener('mouseup', () => {
-        if (isResizing) {
-            isResizing = false;
-            currentColumn = null;
-            startX = 0;
-            startWidth = 0;
-            document.body.style.userSelect = '';  
-        }
+
+        col.style.position = 'relative';
+        col.appendChild(resizer);
     });
 }
-
 display(list);

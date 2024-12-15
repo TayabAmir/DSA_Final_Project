@@ -7,7 +7,6 @@ body {
     padding-top: 120px;
 }
 
-/* Table Styling */
 table {
     border-collapse: collapse;
     margin: 20px auto;
@@ -22,15 +21,10 @@ td {
     min-width: 70px;
     height: 40px;
     text-align: center;
-    border: 1px solid #ddd;
+    border: 1px solid black;
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.1s;
-}
-
-th {
-    resize: horizontal;
-    overflow: auto;
 }
 
 td:hover {
