@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tris Excel</title>
-    <link rel="stylesheet" href="spreadsheetCSS.css">
+    <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
     <div id="ribbon">
         <div class="tabs">
@@ -21,13 +23,38 @@
                     <button id="underline">Underline</button>
                 </div>
                 <div class="group">
+                    <label for="fontSizeDropdown">Font Size:</label>
+                    <select id="fontSizeDropdown">
+                        <option value="8">8</option>
+                        <option value="10">10</option>
+                        <option value="12" selected>12</option>
+                        <option value="14">14</option>
+                        <option value="16">16</option>
+                        <option value="18">18</option>
+                        <option value="20">20</option>
+                        <option value="24">24</option>
+                        <option value="28">28</option>
+                        <option value="32">32</option>
+                        <option value="36">36</option>
+                        <option value="48">48</option>
+                        <option value="72">72</option>
+                    </select>
+                </div>
+                <div class="group">
+                    <button id="alignLeft">Left Align</button>
+                    <button id="alignCenter">Center Align</button>
+                    <button id="alignRight">Right Align</button>
+                </div>
+                <div class="group">
                     <button id="clearData">Clear Data</button>
                 </div>
             </div>
             <div class="tab-panel" id="insert">
                 <div class="group">
-                    <button id="insertChart">Insert Chart</button>
-                    <button id="insertTable">Insert Table</button>
+                    <!-- <button id="insertChart">Insert Chart</button>
+                    <button id="insertTable">Insert Table</button> -->
+                    <button id="insertRow">Insert Row</button>
+                    <button id="insertColumn">Insert Column</button>
                 </div>
             </div>
             <div class="tab-panel" id="view">
@@ -39,14 +66,18 @@
         </div>
     </div>
     <div id="grid-container"></div>
-    <script src="LinkedLists.js"></script>
+    <script src="LinkedList.js"></script>
     <script src="Stack.js"></script>
-    <script src="Toolbar.js"></script>
+    <script src="Queue.js"></script>
+    <script src="TernaryLinkedLists.js"></script>
     <script src="DisplayGrid.js"></script>
+    <script src="Toolbar.js"></script>
     <script src="Binary_Search_Tree.js"></script>
     <script src="Graphs.js"></script>
-    <script src="UndoRedo.js"></script>
     <script src="FormulaFunctionality.js"></script>
     <script src="FindFunctionality.js"></script>
+    <script src="main.js"></script>
+    <script src="UndoRedo.js"></script>
 </body>
+
 </html>

@@ -11,6 +11,7 @@ for (let i = 0; i < rows; i++) {
 let currentCell = null;
 function display(list) {
     let container = document.getElementById('grid-container');
+    container.innerHTML = '';
     let table = document.createElement('table');
     let currRow = list.head;
     while (currRow) {
@@ -42,6 +43,37 @@ function display(list) {
     addColumnHeaders();
 }
 
+function addColumnHeaders() {
+    const table = document.querySelector('table');
+    const headerRow = document.createElement('tr');
+    const emptyCell = document.createElement('td');
+    headerRow.appendChild(emptyCell);
+    let char = 'A';
+    for (let i = 0; i < cols; i++) {
+        const headerCell = document.createElement('td');
+        if (i < 26) {
+            headerCell.innerText = String.fromCharCode(65 + i);
+        } else {
+            const prefix = String.fromCharCode(65 + Math.floor(i / 26) - 1);
+            const suffix = String.fromCharCode(65 + (i % 26));
+            headerCell.innerText = prefix + suffix;
+        }
+        headerCell.style.fontWeight = 'bold';
+        headerCell.classList.add('resizable');
+        headerCell.style.position = 'relative';  
+        const resizeHandle = document.createElement('div'); 
+        resizeHandle.style.position = 'absolute';
+        resizeHandle.style.right = '0';
+        resizeHandle.style.top = '0';
+        resizeHandle.style.width = '5px';
+        resizeHandle.style.height = '100%';
+        resizeHandle.style.cursor = 'ew-resize';
+        headerCell.appendChild(resizeHandle);        
+        headerRow.appendChild(headerCell);
+    }
+    table.prepend(headerRow);
+}
+
 function addRowHeaders() {
     const rows = Array.from(document.getElementsByTagName('tr'));
     currRow = 1
@@ -52,29 +84,6 @@ function addRowHeaders() {
         row.prepend(headerCell);
         currRow++
     });
-}
-
-function addColumnHeaders() {
-    const table = document.querySelector('table');
-    const headerRow = document.createElement('tr');
-    const emptyCell = document.createElement('td');
-    headerRow.appendChild(emptyCell);
-    let char = 'A';
-    for (let i = 0; i < cols; i++) {
-        const headerCell = document.createElement('td');
-
-        if (i < 26) {
-            headerCell.innerText = String.fromCharCode(65 + i);
-        } else {
-            const prefix = String.fromCharCode(65 + Math.floor(i / 26) - 1);
-            const suffix = String.fromCharCode(65 + (i % 26));
-            headerCell.innerText = prefix + suffix;
-        }
-
-        headerCell.style.fontWeight = 'bold';
-        headerRow.appendChild(headerCell);
-    }
-    table.prepend(headerRow);
 }
 
 function highlightCell(cell) {
@@ -115,5 +124,46 @@ document.addEventListener('keydown', function (event) {
         event.preventDefault();
     }
 });
+
+function attachResizeListeners() {
+    let isResizing = false;
+    let currentColumn = null;
+    let startX = 0;
+    let startWidth = 0;
+    const headerCells = document.querySelectorAll('td.resizable'); 
+    headerCells.forEach((headerCell, index) => {
+        const resizeHandle = headerCell.querySelector('div');
+        resizeHandle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            currentColumn = headerCell;
+            startX = e.clientX;
+            startWidth = currentColumn.offsetWidth;
+            document.body.style.userSelect = 'none';  
+        });
+    });
+    document.addEventListener('mousemove', (e) => {
+        if (isResizing && currentColumn) {
+            const deltaX = e.clientX - startX;
+            currentColumn.style.width = `${startWidth + deltaX}px`;
+            const columnIndex = Array.from(currentColumn.parentElement.children).indexOf(currentColumn);
+            const rows = document.querySelectorAll('table tr');
+            rows.forEach((row) => {
+                const cell = row.children[columnIndex];
+                if (cell) {
+                    cell.style.width = `${startWidth + deltaX}px`;
+                }
+            });
+        }
+    });
+    document.addEventListener('mouseup', () => {
+        if (isResizing) {
+            isResizing = false;
+            currentColumn = null;
+            startX = 0;
+            startWidth = 0;
+            document.body.style.userSelect = '';  
+        }
+    });
+}
 
 display(list);

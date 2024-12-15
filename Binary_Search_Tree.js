@@ -34,6 +34,48 @@ class BST {
         return node;
     }
 
+    delete(rootNode, key, cellref) {
+        if (!rootNode) return rootNode;
+
+        if (key < rootNode.value) {
+            rootNode.left = this.delete(rootNode.left, key, cellref);
+        } else if (key > rootNode.value) {
+            rootNode.right = this.delete(rootNode.right, key, cellref);
+        } else {
+            console.log(rootNode)
+            const cellIndex = rootNode.cells.findIndex(
+                (ref) => ref[0] === cellref[0] && ref[1] === cellref[1]
+            );
+
+            if (cellIndex !== -1) {
+                rootNode.cells.splice(cellIndex, 1);
+            }
+
+            if (rootNode.cells.length > 0) {
+                return rootNode;
+            }
+
+            if (!rootNode.left) {
+                let temp = rootNode.right;
+                rootNode = null;
+                return temp;
+            } else if (!rootNode.right) {
+                let temp = rootNode.left;
+                rootNode = null;
+                return temp;
+            }
+
+            let curr = rootNode.right;
+            while (curr.left) curr = curr.left;
+            rootNode.value = curr.value;
+            rootNode.cells = curr.cells;
+            rootNode.right = this.delete(rootNode.right, curr.value, cellref);
+        }
+
+        return rootNode;
+    }
+
+
     find(value) {
         const results = [];
         this._find(this.root, value, results);
@@ -43,7 +85,7 @@ class BST {
     _find(node, value, results) {
         if (!node) return;
         if (typeof value === 'string') {
-            if (node.value.toLowerCase().includes(value.toLowerCase())) {
+            if (node.value.toLowerCase().startsWith(value.toLowerCase())) {
                 results.push(...node.cells);
             }
         } else {

@@ -7,7 +7,7 @@ document.addEventListener('keydown', (e) => {
 
 function search() {
     const existingBox = document.getElementById('search-box');
-    if (existingBox) return; 
+    if (existingBox) return;
 
     const searchBox = document.createElement('div');
     searchBox.id = 'search-box';
@@ -15,13 +15,24 @@ function search() {
     searchBox.style.top = '10px';
     searchBox.style.right = '10px';
     searchBox.style.zIndex = 1000;
-    searchBox.style.background = 'white';
-    searchBox.style.border = '1px solid black';
-    searchBox.style.padding = '10px';
+    searchBox.style.background = '#ffffff';
+    searchBox.style.border = '1px solid #ccc';
+    searchBox.style.boxShadow = '0px 4px 6px rgba(0, 0, 0, 0.1)';
+    searchBox.style.padding = '15px';
+    searchBox.style.borderRadius = '8px';
+    searchBox.style.fontFamily = 'Arial, sans-serif';
+
     searchBox.innerHTML = `
-        <input type="text" id="search-input" placeholder="Find..." style="margin-right: 5px;">
-        <button id="search-btn">Search</button>
-        <button id="close-search">X</button>
+    <input type="text" id="search-input" placeholder="Find..." 
+        style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 150px; margin-right: 10px; font-size: 14px;">
+    <button id="search-btn" 
+        style="padding: 8px 12px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 14px; cursor: pointer;">
+        Search
+    </button>
+    <button id="close-search" 
+        style="padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 5px; font-size: 14px; cursor: pointer; margin-left: 5px;">
+        X
+    </button>
     `;
 
     document.body.appendChild(searchBox);

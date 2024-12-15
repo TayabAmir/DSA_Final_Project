@@ -1,19 +1,19 @@
-class Stack {
+class Queue {
     constructor() {
         this.list = new LinkedList();
     }
 
-    push(val) {
-        this.list.insertAtHead(val);
+    enqueue(val) {
+        this.list.insertAtEnd(val);
     }
 
-    pop() {
+    dequeue() {
         if (!this.list.isEmpty()) {
-            const topValue = this.list.head.val;
-            this.list.deleteFromStart(); 
-            return topValue;
+            const frontValue = this.list.head.val;
+            this.list.deleteFromStart();
+            return frontValue;
         } else {
-            throw new Error("Stack is empty. Cannot pop.");
+            throw new Error("Queue is empty. Cannot dequeue.");
         }
     }
 
@@ -21,7 +21,7 @@ class Stack {
         if (!this.list.isEmpty()) {
             return this.list.head.val;
         } else {
-            throw new Error("Stack is empty. Cannot peek.");
+            throw new Error("Queue is empty. Cannot peek.");
         }
     }
 
